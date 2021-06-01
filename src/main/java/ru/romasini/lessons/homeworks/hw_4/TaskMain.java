@@ -37,6 +37,8 @@ public class TaskMain {
         System.out.println("Удаление последнего");
         twoSideLinkedList.removeLast();
         twoSideLinkedList.display();
+        twoSideLinkedList.remove(2);
+        twoSideLinkedList.display();
 
         //Двусторонняя очередь
 

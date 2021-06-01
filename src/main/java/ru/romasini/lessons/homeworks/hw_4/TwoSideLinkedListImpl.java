@@ -6,7 +6,7 @@ public class TwoSideLinkedListImpl<E> extends SimpleLinkedListImpl<E> implements
 
     @Override
     public void insertLast(E value) {
-        Node<E> newNode = new Node<>(value, null);
+        Node<E> newNode = new Node<>(value, null, lastElement);
         if(isEmpty()){
            firstElement = newNode;
         }else {
@@ -14,12 +14,18 @@ public class TwoSideLinkedListImpl<E> extends SimpleLinkedListImpl<E> implements
         }
         lastElement = newNode;
         size++;
-
     }
 
     @Override
     public void insertFirst(E value) {
-        super.insertFirst(value);
+        Node<E> newNode = new Node<>(value, firstElement, null);
+        if (firstElement != null) {
+            firstElement.prev = newNode;
+        }
+
+        firstElement = newNode;
+        size++;
+
         if (size == 1){
             lastElement = firstElement;
         }
@@ -27,19 +33,44 @@ public class TwoSideLinkedListImpl<E> extends SimpleLinkedListImpl<E> implements
 
     @Override
     public E removeFirst() {
-        E removedValue = super.removeFirst();
+        if (!isEmpty()) {
+            return null;
+        }
+
+        Node<E> removedNode = firstElement;
+        firstElement = firstElement.next;
+        if (firstElement != null) {
+            firstElement.prev = null;
+        }
+
+        removedNode.next = null;
+        removedNode.prev = null;
+
+        size--;
         if (isEmpty()){
             lastElement = null;
         }
-        return removedValue;
+
+        return removedNode.item;
     }
 
     @Override
     public E removeLast() {
-//        if (isEmpty()){
-//            return null;
-//        }
-        E value = getValue(lastElement);
+        if (isEmpty()){
+            return null;
+        }
+        Node<E> removedNode = lastElement;
+        E value = getValue(removedNode);
+
+        lastElement = removedNode.prev;
+
+        if(lastElement != null){
+            lastElement.next = null;
+        }
+
+        removedNode.next = null;
+        removedNode.prev = null;
+
         return value;
     }
 
@@ -61,13 +92,16 @@ public class TwoSideLinkedListImpl<E> extends SimpleLinkedListImpl<E> implements
             removeFirst();
             return true;
         } else if (current == lastElement) {
-            lastElement = previous;
-            previous.next = null;
+            removeLast();
+            return true;
         } else {
             previous.next = current.next;
+            previous.next.prev = previous;
         }
 
         current.next = null;
+        current.prev = null;
+
         size--;
 
         return true;
