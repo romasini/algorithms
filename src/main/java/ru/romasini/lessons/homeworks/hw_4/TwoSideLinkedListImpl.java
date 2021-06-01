@@ -33,7 +33,7 @@ public class TwoSideLinkedListImpl<E> extends SimpleLinkedListImpl<E> implements
 
     @Override
     public E removeFirst() {
-        if (!isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
 
@@ -70,6 +70,11 @@ public class TwoSideLinkedListImpl<E> extends SimpleLinkedListImpl<E> implements
 
         removedNode.next = null;
         removedNode.prev = null;
+        size--;
+
+        if (isEmpty()){
+            firstElement = null;
+        }
 
         return value;
     }
