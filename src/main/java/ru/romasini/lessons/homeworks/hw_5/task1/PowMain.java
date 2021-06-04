@@ -8,6 +8,7 @@ public class PowMain {
 
     public static void main(String[] args) {
         System.out.println(pow(2,3));
+        System.out.println(powTail(2,3));
     }
 
     public static long pow(long base, int exp){
@@ -17,6 +18,20 @@ public class PowMain {
         }
 
         return base * pow(base, --exp);
+
+    }
+
+    public static long powTail(long base, int exp){
+        return pow(base, exp, 1);
+    }
+
+    public static long pow(long base, int exp, long acc){
+
+        if(exp < 1){
+            return acc;
+        }
+
+        return pow(base, --exp, acc * base);
 
     }
 
