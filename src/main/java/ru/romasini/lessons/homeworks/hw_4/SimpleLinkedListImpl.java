@@ -129,7 +129,7 @@ public class SimpleLinkedListImpl<E> implements LinkedList<E> {
 
         @Override
         public E next() {
-            if (isEmpty() || cursor > size ||current == null){
+            if (!hasNext()){
                 throw new NoSuchElementException();
             }
 
