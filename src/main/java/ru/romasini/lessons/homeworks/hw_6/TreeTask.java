@@ -25,7 +25,7 @@ public class TreeTask {
             Tree<Integer> temp = new TreeImpl<>(maxLevel);
             treeList.add(temp);
             for (int j = 0; j < maxSize; j++) {
-                temp.add(random.nextInt(2 * maxBound) - maxBound);
+                temp.add(random.nextInt(2 * maxBound + 1) - maxBound);
             }
         }
 
@@ -39,7 +39,7 @@ public class TreeTask {
         }
 
         System.out.println("Balanced trees: " + balancedCount + "/" + maxCount);
-        System.out.println("Balanced trees, %: " + 100*balancedCount/maxCount );
+        System.out.println("Balanced trees, %: " + 100*(balancedCount/(double)maxCount));
 
     }
 }
